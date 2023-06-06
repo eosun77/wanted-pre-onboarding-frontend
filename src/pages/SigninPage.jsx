@@ -2,21 +2,19 @@ import React, { useState } from "react";
 import { styled } from "styled-components";
 import InputBox from "../components/InputBox";
 import BtnBox from "../components/BtnBox";
-import { createAuth } from "../apis/auth";
-import { useNavigate } from "react-router-dom";
+import { readAuth } from "../apis/auth";
 
-const SignupWrapper = styled.div`
+const SigninWrapper = styled.div`
   text-align: center;
 `;
 
-const SignupHeader = styled.div`
+const SigninHeader = styled.div`
   font-size: 32px;
   margin-block: 36px;
   font-weight: bold;
 `;
 
 function SignupPage() {
-  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -36,21 +34,21 @@ function SignupPage() {
     return value.length >= 8;
   };
 
-  const handleSignup = () => {
-    createAuth(email, password)
+  const handleSignin = () => {
+    readAuth(email, password)
       .then((res) => {
         console.log(res);
-        alert("회원가입 완료");
-        navigate("/signin");
+        alert("로그인 성공");
+        localStorage.setItem("accessToken", res.data.access_token);
       })
       .catch((err) => {
         console.log(err);
-        alert("회원가입 실패");
+        alert("로그인 실패");
       });
   };
   return (
-    <SignupWrapper>
-      <SignupHeader>회원가입</SignupHeader>
+    <SigninWrapper>
+      <SigninHeader>로그인</SigninHeader>
       <InputBox label="이메일" id="email-input" onChange={handleEmailChange} />
       <InputBox
         label="비밀번호"
@@ -59,12 +57,12 @@ function SignupPage() {
         type="password"
       />
       <BtnBox
-        label="회원가입"
-        id="signup-button"
-        onClick={handleSignup}
+        label="로그인"
+        id="signin-button"
+        onClick={handleSignin}
         disabled={!validateEmail(email) || !validatePassword(password)}
       />
-    </SignupWrapper>
+    </SigninWrapper>
   );
 }
 
