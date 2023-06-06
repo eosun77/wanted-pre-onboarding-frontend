@@ -14,12 +14,17 @@ const GlobalStyle = createGlobalStyle`
     --gray-color:#DADADA;
     --lightgray-color:#F4F4F4;
     --main-color:#0064FF;
+    --main-color-hover:#0054CC;
     }
 
     html, body {
-    font-family: 'Pretendard-Regular', -apple-system, Helvetica Neue, sans-serif;
-    color: var(--black-color);
-  }
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        font-family: 'Pretendard-Regular', -apple-system, Helvetica Neue, sans-serif;
+        color: var(--black-color);
+    }
 
 `;
 export { GlobalStyle };

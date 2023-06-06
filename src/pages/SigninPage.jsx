@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { styled } from "styled-components";
-import InputBox from "../components/InputBox";
+import InputLine from "../components/InputLine";
 import BtnBox from "../components/BtnBox";
 import { readAuth } from "../apis/auth";
+import { useNavigate } from "react-router-dom";
 
 const SigninWrapper = styled.div`
   text-align: center;
@@ -15,6 +16,7 @@ const SigninHeader = styled.div`
 `;
 
 function SignupPage() {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -40,6 +42,7 @@ function SignupPage() {
         console.log(res);
         alert("로그인 성공");
         localStorage.setItem("accessToken", res.data.access_token);
+        navigate("/todo");
       })
       .catch((err) => {
         console.log(err);
@@ -49,8 +52,8 @@ function SignupPage() {
   return (
     <SigninWrapper>
       <SigninHeader>로그인</SigninHeader>
-      <InputBox label="이메일" id="email-input" onChange={handleEmailChange} />
-      <InputBox
+      <InputLine label="이메일" id="email-input" onChange={handleEmailChange} />
+      <InputLine
         label="비밀번호"
         id="password-input"
         onChange={handlePasswordChange}
