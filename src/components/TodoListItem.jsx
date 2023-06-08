@@ -33,9 +33,16 @@ function TodoListItem({ todo, onClickCheckBox }) {
   const [isDeleted, setIsDeleted] = useState(false);
   const [isModify, setIsModify] = useState(false);
   const [modifyTodo, setModifyTodo] = useState(todo.todo);
+  const [temp, setTemp] = useState(todo.todo);
 
   const handleClickModify = () => {
+    setTemp(modifyTodo);
     setIsModify(!isModify);
+  };
+
+  const handleClickCancel = () => {
+    setIsModify(!isModify);
+    setModifyTodo(temp);
   };
 
   const handleClickDelete = () => {
@@ -106,7 +113,7 @@ function TodoListItem({ todo, onClickCheckBox }) {
           label={isModify ? "취소" : "삭제"}
           ghost="true"
           id={isModify ? "cancel-button" : "delete-button"}
-          onClick={isModify ? handleClickModify : handleClickDelete}
+          onClick={isModify ? handleClickCancel : handleClickDelete}
         />
       </TodoListController>
     </TodoListItemWrapper>
