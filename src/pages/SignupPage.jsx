@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { styled } from "styled-components";
-import InputBox from "../components/InputBox";
+import InputLine from "../components/InputLine";
 import BtnBox from "../components/BtnBox";
 import { createAuth } from "../apis/auth";
 import { useNavigate } from "react-router-dom";
@@ -51,8 +51,8 @@ function SignupPage() {
   return (
     <SignupWrapper>
       <SignupHeader>회원가입</SignupHeader>
-      <InputBox label="이메일" id="email-input" onChange={handleEmailChange} />
-      <InputBox
+      <InputLine label="이메일" id="email-input" onChange={handleEmailChange} />
+      <InputLine
         label="비밀번호"
         id="password-input"
         onChange={handlePasswordChange}
