@@ -15,6 +15,13 @@ const SigninHeader = styled.div`
   font-weight: bold;
 `;
 
+const SigninButtonContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+`;
+
 function SignupPage() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
@@ -59,12 +66,20 @@ function SignupPage() {
         onChange={handlePasswordChange}
         type="password"
       />
-      <BtnBox
-        label="로그인"
-        id="signin-button"
-        onClick={handleSignin}
-        disabled={!validateEmail(email) || !validatePassword(password)}
-      />
+      <SigninButtonContainer>
+        <BtnBox
+          label="로그인"
+          id="signin-button"
+          onClick={handleSignin}
+          disabled={!validateEmail(email) || !validatePassword(password)}
+        />
+        <BtnBox
+          label="회원가입"
+          id="move-signup-button"
+          onClick={() => navigate("/signup")}
+          ghost="true"
+        />
+      </SigninButtonContainer>
     </SigninWrapper>
   );
 }
