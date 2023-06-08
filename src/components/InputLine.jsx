@@ -22,12 +22,13 @@ const InputLineInput = styled.input`
   outline: none;
 `;
 
-function InputLine({ label, id, onChange, type, margin }) {
+function InputLine({ label, id, value, onChange, type, margin }) {
   return (
     <InputLineWrapper margin={margin}>
       <InputLineLabel>{label}</InputLineLabel>
       <InputLineInput
         data-testid={id}
+        value={value}
         onChange={onChange}
         type={type}
       ></InputLineInput>

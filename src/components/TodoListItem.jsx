@@ -30,6 +30,7 @@ const TodoListController = styled.div`
 `;
 
 function TodoListItem({ todo, onClickCheckBox }) {
+  const [isDeleted, setIsDeleted] = useState(false);
   const [isModify, setIsModify] = useState(false);
   const [modifyTodo, setModifyTodo] = useState(todo.todo);
 
@@ -42,6 +43,7 @@ function TodoListItem({ todo, onClickCheckBox }) {
       .then((res) => {
         console.log(res);
         alert("삭제 완료");
+        setIsDeleted(true);
       })
       .catch((err) => {
         console.log(err);
@@ -70,7 +72,9 @@ function TodoListItem({ todo, onClickCheckBox }) {
     setIsModify(!isModify);
   };
 
-  return (
+  return isDeleted ? (
+    <></>
+  ) : (
     <TodoListItemWrapper>
       <TodoListItemLabel>
         <input
