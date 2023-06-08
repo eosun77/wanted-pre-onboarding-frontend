@@ -31,3 +31,12 @@ export const updateTodo = async (todo) => {
     throw error;
   }
 };
+
+export const deleteTodo = async (id) => {
+  try {
+    const response = await axiosInstance.delete(`/todos/${id}`);
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};

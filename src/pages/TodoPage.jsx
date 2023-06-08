@@ -45,7 +45,7 @@ function TodoPage() {
       });
   }, []);
 
-  const handleTodoChange = (event) => {
+  const handleTodoInputChange = (event) => {
     setTodoInput(event.target.value);
   };
 
@@ -96,7 +96,7 @@ function TodoPage() {
           label="Todo"
           margin="0px"
           id="new-todo-input"
-          onChange={handleTodoChange}
+          onChange={handleTodoInputChange}
         />
         <BtnBox
           width="104px"
