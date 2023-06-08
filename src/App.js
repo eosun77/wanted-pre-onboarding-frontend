@@ -19,12 +19,36 @@ function PrivateRoute({ children }) {
   }
 }
 
+function PublickRoute({ children }) {
+  const accessToken = localStorage.getItem("accessToken");
+
+  if (accessToken) {
+    return <Navigate to="/todo" replace />;
+  } else {
+    return children;
+  }
+}
+
 function App() {
   return (
     <Routes>
       <Route path="/" element={<Navigate to="/signin" replace />} />
-      <Route path="/signup" element={<SignupPage />} />
-      <Route path="/signin" element={<SigninPage />} />
+      <Route
+        path="/signup"
+        element={
+          <PublickRoute>
+            <SignupPage />
+          </PublickRoute>
+        }
+      />
+      <Route
+        path="/signin"
+        element={
+          <PublickRoute>
+            <SigninPage />
+          </PublickRoute>
+        }
+      />
       <Route
         path="/todo"
         element={
