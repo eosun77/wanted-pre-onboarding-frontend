@@ -55,6 +55,7 @@ function TodoPage() {
         console.log(res);
         alert("추가 완료");
         setTodoList([...todoList, res.data]);
+        setTodoInput("");
       })
       .catch((err) => {
         console.log(err);
@@ -96,6 +97,7 @@ function TodoPage() {
           label="Todo"
           margin="0px"
           id="new-todo-input"
+          value={todoInput}
           onChange={handleTodoInputChange}
         />
         <BtnBox
