@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { styled } from "styled-components";
 import InputLine from "../components/InputLine";
 import BtnBox from "../components/BtnBox";
-import { readAuth } from "../apis/auth";
+import { signin } from "../apis/auth";
 import { useNavigate } from "react-router-dom";
 
 const SigninWrapper = styled.div`
@@ -44,7 +44,7 @@ function SignupPage() {
   };
 
   const handleSignin = () => {
-    readAuth(email, password)
+    signin(email, password)
       .then((res) => {
         console.log(res);
         alert("로그인 성공");
