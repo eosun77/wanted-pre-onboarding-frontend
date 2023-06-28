@@ -42,7 +42,7 @@ const handleSignin = () => {
     then((res) => {
       console.log(res);
       alert("로그인 성공");
-      localStorage.setItem("accessToken", res.data.access_token); // 로그인 성공시 로컬 스토리지에 토큰 저장
+      localStorage.setItem("accessToken", res.data.access_token); // 로컬 스토리지 토큰 저장
       navigate("/todo");
     })
     .catch((err) => {
