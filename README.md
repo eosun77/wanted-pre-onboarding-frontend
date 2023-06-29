@@ -145,35 +145,26 @@ useEffect(() => {
 ```
 
 ### 🔄 Update (todo 수정)
-- TodoPage.jsx
+- TodoListItem.jsx
 ```js
 // 체크박스 수정
-const handleClickCheckBox = (todo) => {
+const handleClickCheckBox = () => {
+  const newTodo = {
+    ...todoItem,
+    isCompleted: !todoItem.isCompleted,
+  };
   updateTodo(newTodo)
     .then((res) => {
       console.log(res);
       alert("수정 완료");
-      const newTodo = {
-        ...todo,
-        isCompleted: !todo.isCompleted,
-      };
-      const todoId = todo.id;
-      const updatedTodoList = todoList.map((todo) => {
-        if (todo.id === todoId) {
-          return newTodo;
-        }
-        return todo;
-      });
-  
-      setTodoList(updatedTodoList);
+      setIsCompleted(!isCompleted);
     })
     .catch((err) => {
       console.log(err);
       alert("수정 실패");
     });
-}
+};
 ```
-- TodoListItem.jsx
 ```js
 // todo 내용 수정
 const handleSubmitModify = (event) => {
