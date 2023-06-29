@@ -169,7 +169,7 @@ const handleClickCheckBox = () => {
 // todo 내용 수정
 const handleSubmitModify = (event) => {
   const newTodo = {
-    ...todo,
+    ...todoItem,
     todo: modifyTodo,
   };
   updateTodo(newTodo)
