@@ -35,7 +35,7 @@ $ npm start
 ## 기능 구현
 
 ### 🔐 인증/인가
-- SigninPage.jsx  
+- SigninPage.jsx
 ```js
 const handleSignin = () => {
   signin(email, password)
@@ -66,7 +66,7 @@ function PrivateRoute({ children }) {
     return <Navigate to="/signin" replace />;
   }
 }
-
+// 로그인이 필요없는 페이지
 function PublickRoute({ children }) {
   const accessToken = localStorage.getItem("accessToken");
 
@@ -75,6 +75,38 @@ function PublickRoute({ children }) {
   } else {
     return children;
   }
+}
+
+function App() {
+  return (
+    <Routes>
+      <Route path="/" element={<Navigate to="/signin" replace />} />
+      <Route
+        path="/signup"
+        element={
+          <PublickRoute>
+            <SignupPage />
+          </PublickRoute>
+        }
+      />
+      <Route
+        path="/signin"
+        element={
+          <PublickRoute>
+            <SigninPage />
+          </PublickRoute>
+        }
+      />
+      <Route
+        path="/todo"
+        element={
+          <PrivateRoute>
+            <TodoPage />
+          </PrivateRoute>
+        }
+      />
+    </Routes>
+  );
 }
 ```
 
