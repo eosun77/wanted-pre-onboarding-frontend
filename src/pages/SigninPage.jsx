@@ -22,7 +22,7 @@ const SigninButtonContainer = styled.div`
   gap: 8px;
 `;
 
-function SignupPage() {
+function SigninPage() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -84,4 +84,4 @@ function SignupPage() {
   );
 }
 
-export default SignupPage;
+export default SigninPage;
