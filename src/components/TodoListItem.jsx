@@ -3,40 +3,34 @@ import { styled } from "styled-components";
 import BtnBox from "./BtnBox";
 import useTodoListItem from "../hooks/useTodoListItem";
 
-function TodoListItem({ todoItem }) {
+function TodoListItem({ todoItem, onDelete, onUpdate, onCheck }) {
   const {
-    isDeleted,
     isModify,
-    todo,
-    isCompleted,
+    todoText,
     handleClickModify,
     handleClickCancel,
-    handleClickDelete,
     handleModifyInputChange,
     handleSubmitModify,
-    handleClickCheckBox,
-  } = useTodoListItem(todoItem);
+  } = useTodoListItem(todoItem, onUpdate);
 
-  return isDeleted ? (
-    <></>
-  ) : (
+  return (
     <TodoListItemWrapper>
       <TodoListItemLabel>
         <input
           type="checkbox"
-          onChange={handleClickCheckBox}
-          checked={isCompleted}
+          onChange={onCheck}
+          checked={todoItem.isCompleted}
         />
         {isModify ? (
           <input
             style={{ margin: "0 8px" }}
             data-testid="modify-input"
-            value={todo}
+            value={todoText}
             onChange={handleModifyInputChange}
             autoFocus
           />
         ) : (
-          <span style={{ margin: "0 8px" }}>{todo}</span>
+          <span style={{ margin: "0 8px" }}>{todoItem.todo}</span>
         )}
       </TodoListItemLabel>
       <TodoListController>
@@ -51,7 +45,7 @@ function TodoListItem({ todoItem }) {
           label={isModify ? "취소" : "삭제"}
           ghost="true"
           id={isModify ? "cancel-button" : "delete-button"}
-          onClick={isModify ? handleClickCancel : handleClickDelete}
+          onClick={isModify ? handleClickCancel : onDelete}
         />
       </TodoListController>
     </TodoListItemWrapper>

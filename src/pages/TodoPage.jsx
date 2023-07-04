@@ -6,8 +6,14 @@ import BtnBox from "../components/BtnBox";
 import useTodo from "../hooks/useTodo";
 
 function TodoPage() {
-  const { todoInput, todoList, handleCreateTodo, handleTodoInputChange } =
-    useTodo();
+  const {
+    todoInput,
+    todoList,
+    handleCreateTodo,
+    handleTodoInputChange,
+    onDelete,
+    onUpdate,
+  } = useTodo();
 
   return (
     <TodoWrapper>
@@ -30,7 +36,23 @@ function TodoPage() {
 
       <TodoList>
         {todoList.map((todo) => (
-          <TodoListItem key={todo.id} todoItem={todo} />
+          <TodoListItem
+            key={todo.id}
+            todoItem={todo}
+            onDelete={() => onDelete(todo.id)}
+            onUpdate={(todoText) =>
+              onUpdate({
+                ...todo,
+                todo: todoText,
+              })
+            }
+            onCheck={() =>
+              onUpdate({
+                ...todo,
+                isCompleted: !todo.isCompleted,
+              })
+            }
+          />
         ))}
       </TodoList>
     </TodoWrapper>

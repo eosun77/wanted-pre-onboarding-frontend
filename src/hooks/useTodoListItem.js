@@ -1,87 +1,33 @@
 import { useState } from "react";
-import { deleteTodo, updateTodo } from "../apis/todo";
 
-const useTodoListItem = (todoItem) => {
-  const [isDeleted, setIsDeleted] = useState(false);
+const useTodoListItem = (todoItem, onUpdate) => {
   const [isModify, setIsModify] = useState(false);
-
-  const [todo, setTodo] = useState(todoItem.todo);
-  const [isCompleted, setIsCompleted] = useState(todoItem.isCompleted);
-
-  const [temp, setTemp] = useState("");
+  const [todoText, setTodoText] = useState(todoItem.todo);
 
   const handleClickModify = () => {
-    setTemp(todo);
     setIsModify(!isModify);
   };
 
   const handleClickCancel = () => {
     setIsModify(!isModify);
-    setTodo(temp);
-  };
-
-  const handleClickDelete = () => {
-    deleteTodo(todoItem.id)
-      .then((res) => {
-        console.log(res);
-        alert("삭제 완료");
-        setIsDeleted(true);
-      })
-      .catch((err) => {
-        console.log(err);
-        alert("삭제 실패");
-      });
   };
 
   const handleModifyInputChange = (event) => {
-    setTodo(event.target.value);
+    setTodoText(event.target.value);
   };
 
   const handleSubmitModify = () => {
-    const newTodo = {
-      ...todoItem,
-      todo: todo,
-    };
-    updateTodo(newTodo)
-      .then((res) => {
-        console.log(res);
-        alert("수정 완료");
-        setIsModify(!isModify);
-      })
-      .catch((err) => {
-        console.log(err);
-        alert("수정 실패");
-      });
-  };
-
-  const handleClickCheckBox = () => {
-    const newTodo = {
-      ...todoItem,
-      isCompleted: !todoItem.isCompleted,
-    };
-    updateTodo(newTodo)
-      .then((res) => {
-        console.log(res);
-        alert("수정 완료");
-        setIsCompleted(!isCompleted);
-      })
-      .catch((err) => {
-        console.log(err);
-        alert("수정 실패");
-      });
+    onUpdate(todoText);
+    setIsModify(false);
   };
 
   return {
-    isDeleted,
     isModify,
-    todo,
-    isCompleted,
+    todoText,
     handleClickModify,
     handleClickCancel,
-    handleClickDelete,
     handleModifyInputChange,
     handleSubmitModify,
-    handleClickCheckBox,
   };
 };
 

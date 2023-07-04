@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { createTodo, getTodos } from "../apis/todo";
+import { createTodo, deleteTodo, getTodos, updateTodo } from "../apis/todo";
 
 const useTodo = () => {
   const [todoInput, setTodoInput] = useState("");
@@ -35,11 +35,43 @@ const useTodo = () => {
       });
   };
 
+  const onDelete = (id) => {
+    deleteTodo(id)
+      .then((res) => {
+        console.log(res);
+        alert("삭제 완료");
+        setTodoList(todoList.filter((todo) => todo.id !== id));
+      })
+      .catch((err) => {
+        console.log(err);
+        alert("삭제 실패");
+      });
+  };
+
+  const onUpdate = (updatedTodo) => {
+    updateTodo(updatedTodo)
+      .then((res) => {
+        console.log(res);
+        setTodoList(
+          todoList.map((todo_1) =>
+            todo_1.id === updatedTodo.id ? updatedTodo : todo_1
+          )
+        );
+        alert("수정 완료");
+      })
+      .catch((err) => {
+        console.log(err);
+        alert("수정 실패");
+      });
+  };
+
   return {
     todoInput,
     todoList,
     handleTodoInputChange,
     handleCreateTodo,
+    onDelete,
+    onUpdate,
   };
 };
 
