@@ -1,53 +1,19 @@
-import React, { useState } from "react";
+import React from "react";
 import { styled } from "styled-components";
 import InputLine from "../components/InputLine";
 import BtnBox from "../components/BtnBox";
-import { signup } from "../apis/auth";
-import { useNavigate } from "react-router-dom";
-
-const SignupWrapper = styled.div`
-  text-align: center;
-`;
-
-const SignupHeader = styled.div`
-  font-size: 32px;
-  margin-block: 36px;
-  font-weight: bold;
-`;
+import { validateEmail, validatePassword } from "../utils/validate";
+import useAuth from "../hooks/useAuth";
 
 function SignupPage() {
-  const navigate = useNavigate();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const {
+    email,
+    password,
+    handleEmailChange,
+    handlePasswordChange,
+    handleSignup,
+  } = useAuth();
 
-  const handleEmailChange = (event) => {
-    setEmail(event.target.value);
-  };
-
-  const handlePasswordChange = (event) => {
-    setPassword(event.target.value);
-  };
-
-  const validateEmail = (value) => {
-    return value.includes("@");
-  };
-
-  const validatePassword = (value) => {
-    return value.length >= 8;
-  };
-
-  const handleSignup = () => {
-    signup(email, password)
-      .then((res) => {
-        console.log(res);
-        alert("회원가입 완료");
-        navigate("/signin");
-      })
-      .catch((err) => {
-        console.log(err);
-        alert("회원가입 실패");
-      });
-  };
   return (
     <SignupWrapper>
       <SignupHeader>회원가입</SignupHeader>
@@ -67,5 +33,15 @@ function SignupPage() {
     </SignupWrapper>
   );
 }
+
+const SignupWrapper = styled.div`
+  text-align: center;
+`;
+
+const SignupHeader = styled.div`
+  font-size: 32px;
+  margin-block: 36px;
+  font-weight: bold;
+`;
 
 export default SignupPage;
