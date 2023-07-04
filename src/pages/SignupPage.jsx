@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { styled } from "styled-components";
 import InputLine from "../components/InputLine";
 import BtnBox from "../components/BtnBox";
-import { createAuth } from "../apis/auth";
+import { signup } from "../apis/auth";
 import { useNavigate } from "react-router-dom";
 
 const SignupWrapper = styled.div`
@@ -37,7 +37,7 @@ function SignupPage() {
   };
 
   const handleSignup = () => {
-    createAuth(email, password)
+    signup(email, password)
       .then((res) => {
         console.log(res);
         alert("회원가입 완료");

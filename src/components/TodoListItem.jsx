@@ -29,24 +29,25 @@ const TodoListController = styled.div`
   margin-left: 8px;
 `;
 
-function TodoListItem({ todo, onClickCheckBox }) {
+function TodoListItem({ todoItem }) {
   const [isDeleted, setIsDeleted] = useState(false);
   const [isModify, setIsModify] = useState(false);
-  const [modifyTodo, setModifyTodo] = useState(todo.todo);
-  const [temp, setTemp] = useState(todo.todo);
+  const [todo, setTodo] = useState(todoItem.todo);
+  const [isCompleted, setIsCompleted] = useState(todoItem.isCompleted);
+  const [temp, setTemp] = useState(todoItem.todo);
 
   const handleClickModify = () => {
-    setTemp(modifyTodo);
+    setTemp(todo);
     setIsModify(!isModify);
   };
 
   const handleClickCancel = () => {
     setIsModify(!isModify);
-    setModifyTodo(temp);
+    setTodo(temp);
   };
 
   const handleClickDelete = () => {
-    deleteTodo(todo.id)
+    deleteTodo(todoItem.id)
       .then((res) => {
         console.log(res);
         alert("삭제 완료");
@@ -59,24 +60,41 @@ function TodoListItem({ todo, onClickCheckBox }) {
   };
 
   const handleModifyInputChange = (event) => {
-    setModifyTodo(event.target.value);
+    setTodo(event.target.value);
   };
 
   const handleSubmitModify = (event) => {
     const newTodo = {
-      ...todo,
-      todo: modifyTodo,
+      ...todoItem,
+      todo: todo,
     };
     updateTodo(newTodo)
       .then((res) => {
         console.log(res);
         alert("수정 완료");
+        setIsModify(!isModify);
       })
       .catch((err) => {
         console.log(err);
         alert("수정 실패");
       });
-    setIsModify(!isModify);
+  };
+
+  const handleClickCheckBox = () => {
+    const newTodo = {
+      ...todoItem,
+      isCompleted: !todoItem.isCompleted,
+    };
+    updateTodo(newTodo)
+      .then((res) => {
+        console.log(res);
+        alert("수정 완료");
+        setIsCompleted(!isCompleted);
+      })
+      .catch((err) => {
+        console.log(err);
+        alert("수정 실패");
+      });
   };
 
   return isDeleted ? (
@@ -86,19 +104,19 @@ function TodoListItem({ todo, onClickCheckBox }) {
       <TodoListItemLabel>
         <input
           type="checkbox"
-          onChange={onClickCheckBox}
-          checked={todo.isCompleted}
+          onChange={handleClickCheckBox}
+          checked={isCompleted}
         />
         {isModify ? (
           <input
             style={{ margin: "0 8px" }}
             data-testid="modify-input"
-            value={modifyTodo}
+            value={todo}
             onChange={handleModifyInputChange}
             autoFocus
           />
         ) : (
-          <span style={{ margin: "0 8px" }}>{modifyTodo}</span>
+          <span style={{ margin: "0 8px" }}>{todo}</span>
         )}
       </TodoListItemLabel>
       <TodoListController>

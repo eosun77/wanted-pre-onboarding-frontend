@@ -3,7 +3,7 @@ import { styled } from "styled-components";
 import TodoListItem from "../components/TodoListItem";
 import InputLine from "../components/InputLine";
 import BtnBox from "../components/BtnBox";
-import { createTodo, getTodos, updateTodo } from "../apis/todo";
+import { createTodo, getTodos } from "../apis/todo";
 
 const TodoWrapper = styled.div`
   padding: 0 32px;
@@ -63,32 +63,6 @@ function TodoPage() {
       });
   };
 
-  const handleClickCheckBox = (todo) => {
-    const newTodo = {
-      ...todo,
-      isCompleted: !todo.isCompleted,
-    };
-    updateTodo(newTodo)
-      .then((res) => {
-        console.log(res);
-        alert("수정 완료");
-      })
-      .catch((err) => {
-        console.log(err);
-        alert("수정 실패");
-      });
-
-    const todoId = todo.id;
-    const updatedTodoList = todoList.map((todo) => {
-      if (todo.id === todoId) {
-        return newTodo;
-      }
-      return todo;
-    });
-
-    setTodoList(updatedTodoList);
-  };
-
   return (
     <TodoWrapper>
       <TodoHeader>To Do List</TodoHeader>
@@ -110,11 +84,7 @@ function TodoPage() {
 
       <TodoList>
         {todoList.map((todo) => (
-          <TodoListItem
-            key={todo.id}
-            todo={todo}
-            onClickCheckBox={() => handleClickCheckBox(todo)}
-          />
+          <TodoListItem key={todo.id} todoItem={todo} />
         ))}
       </TodoList>
     </TodoWrapper>
