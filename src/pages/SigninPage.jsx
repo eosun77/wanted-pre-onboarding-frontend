@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import { styled } from "styled-components";
 import InputLine from "../components/InputLine";
 import BtnBox from "../components/BtnBox";
-import { signin } from "../apis/auth";
+import useAuth from "../hooks/useAuth";
+import { validateEmail, validatePassword } from "../utils/validate";
 import { useNavigate } from "react-router-dom";
 
 const SigninWrapper = styled.div`
@@ -24,38 +25,15 @@ const SigninButtonContainer = styled.div`
 
 function SigninPage() {
   const navigate = useNavigate();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
 
-  const handleEmailChange = (event) => {
-    setEmail(event.target.value);
-  };
+  const {
+    email,
+    password,
+    handleEmailChange,
+    handlePasswordChange,
+    handleSignin,
+  } = useAuth();
 
-  const handlePasswordChange = (event) => {
-    setPassword(event.target.value);
-  };
-
-  const validateEmail = (value) => {
-    return value.includes("@");
-  };
-
-  const validatePassword = (value) => {
-    return value.length >= 8;
-  };
-
-  const handleSignin = () => {
-    signin(email, password)
-      .then((res) => {
-        console.log(res);
-        alert("로그인 성공");
-        localStorage.setItem("accessToken", res.data.access_token);
-        navigate("/todo");
-      })
-      .catch((err) => {
-        console.log(err);
-        alert("로그인 실패");
-      });
-  };
   return (
     <SigninWrapper>
       <SigninHeader>로그인</SigninHeader>
