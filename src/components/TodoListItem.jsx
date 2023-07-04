@@ -1,7 +1,56 @@
-import React, { useState } from "react";
+import React from "react";
 import { styled } from "styled-components";
 import BtnBox from "./BtnBox";
-import { deleteTodo, updateTodo } from "../apis/todo";
+import useTodoListItem from "../hooks/useTodoListItem";
+
+function TodoListItem({ todoItem, onDelete, onUpdate, onCheck }) {
+  const {
+    isModify,
+    todoText,
+    handleClickModify,
+    handleClickCancel,
+    handleModifyInputChange,
+    handleSubmitModify,
+  } = useTodoListItem(todoItem, onUpdate);
+
+  return (
+    <TodoListItemWrapper>
+      <TodoListItemLabel>
+        <input
+          type="checkbox"
+          onChange={onCheck}
+          checked={todoItem.isCompleted}
+        />
+        {isModify ? (
+          <input
+            style={{ margin: "0 8px" }}
+            data-testid="modify-input"
+            value={todoText}
+            onChange={handleModifyInputChange}
+            autoFocus
+          />
+        ) : (
+          <span style={{ margin: "0 8px" }}>{todoItem.todo}</span>
+        )}
+      </TodoListItemLabel>
+      <TodoListController>
+        <BtnBox
+          width="48px"
+          label={isModify ? "제출" : "수정"}
+          id={isModify ? "submit-button" : "modify-button"}
+          onClick={isModify ? handleSubmitModify : handleClickModify}
+        />
+        <BtnBox
+          width="48px"
+          label={isModify ? "취소" : "삭제"}
+          ghost="true"
+          id={isModify ? "cancel-button" : "delete-button"}
+          onClick={isModify ? handleClickCancel : onDelete}
+        />
+      </TodoListController>
+    </TodoListItemWrapper>
+  );
+}
 
 const TodoListItemWrapper = styled.li`
   display: flex;
@@ -28,114 +77,5 @@ const TodoListController = styled.div`
   width: 112px;
   margin-left: 8px;
 `;
-
-function TodoListItem({ todoItem }) {
-  const [isDeleted, setIsDeleted] = useState(false);
-  const [isModify, setIsModify] = useState(false);
-  const [todo, setTodo] = useState(todoItem.todo);
-  const [isCompleted, setIsCompleted] = useState(todoItem.isCompleted);
-  const [temp, setTemp] = useState(todoItem.todo);
-
-  const handleClickModify = () => {
-    setTemp(todo);
-    setIsModify(!isModify);
-  };
-
-  const handleClickCancel = () => {
-    setIsModify(!isModify);
-    setTodo(temp);
-  };
-
-  const handleClickDelete = () => {
-    deleteTodo(todoItem.id)
-      .then((res) => {
-        console.log(res);
-        alert("삭제 완료");
-        setIsDeleted(true);
-      })
-      .catch((err) => {
-        console.log(err);
-        alert("삭제 실패");
-      });
-  };
-
-  const handleModifyInputChange = (event) => {
-    setTodo(event.target.value);
-  };
-
-  const handleSubmitModify = (event) => {
-    const newTodo = {
-      ...todoItem,
-      todo: todo,
-    };
-    updateTodo(newTodo)
-      .then((res) => {
-        console.log(res);
-        alert("수정 완료");
-        setIsModify(!isModify);
-      })
-      .catch((err) => {
-        console.log(err);
-        alert("수정 실패");
-      });
-  };
-
-  const handleClickCheckBox = () => {
-    const newTodo = {
-      ...todoItem,
-      isCompleted: !todoItem.isCompleted,
-    };
-    updateTodo(newTodo)
-      .then((res) => {
-        console.log(res);
-        alert("수정 완료");
-        setIsCompleted(!isCompleted);
-      })
-      .catch((err) => {
-        console.log(err);
-        alert("수정 실패");
-      });
-  };
-
-  return isDeleted ? (
-    <></>
-  ) : (
-    <TodoListItemWrapper>
-      <TodoListItemLabel>
-        <input
-          type="checkbox"
-          onChange={handleClickCheckBox}
-          checked={isCompleted}
-        />
-        {isModify ? (
-          <input
-            style={{ margin: "0 8px" }}
-            data-testid="modify-input"
-            value={todo}
-            onChange={handleModifyInputChange}
-            autoFocus
-          />
-        ) : (
-          <span style={{ margin: "0 8px" }}>{todo}</span>
-        )}
-      </TodoListItemLabel>
-      <TodoListController>
-        <BtnBox
-          width="48px"
-          label={isModify ? "제출" : "수정"}
-          id={isModify ? "submit-button" : "modify-button"}
-          onClick={isModify ? handleSubmitModify : handleClickModify}
-        />
-        <BtnBox
-          width="48px"
-          label={isModify ? "취소" : "삭제"}
-          ghost="true"
-          id={isModify ? "cancel-button" : "delete-button"}
-          onClick={isModify ? handleClickCancel : handleClickDelete}
-        />
-      </TodoListController>
-    </TodoListItemWrapper>
-  );
-}
 
 export default TodoListItem;

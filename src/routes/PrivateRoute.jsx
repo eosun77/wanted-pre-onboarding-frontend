@@ -1,9 +1,15 @@
 import { Navigate, Outlet } from "react-router-dom";
+import { axiosInstance } from "../apis/instance";
 
 const PrivateRoute = () => {
-  const token = localStorage.getItem("token");
+  const accessToken = localStorage.getItem("accessToken");
+  if (accessToken) {
+    axiosInstance.defaults.headers.common[
+      "Authorization"
+    ] = `Bearer ${accessToken}`;
+  }
 
-  return token ? <Outlet /> : <Navigate to="/signin" replace />;
+  return accessToken ? <Outlet /> : <Navigate to="/signin" replace />;
 };
 
 export default PrivateRoute;

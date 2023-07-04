@@ -6,23 +6,6 @@ import useAuth from "../hooks/useAuth";
 import { validateEmail, validatePassword } from "../utils/validate";
 import { useNavigate } from "react-router-dom";
 
-const SigninWrapper = styled.div`
-  text-align: center;
-`;
-
-const SigninHeader = styled.div`
-  font-size: 32px;
-  margin-block: 36px;
-  font-weight: bold;
-`;
-
-const SigninButtonContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-`;
-
 function SigninPage() {
   const navigate = useNavigate();
 
@@ -61,5 +44,22 @@ function SigninPage() {
     </SigninWrapper>
   );
 }
+
+const SigninWrapper = styled.div`
+  text-align: center;
+`;
+
+const SigninHeader = styled.div`
+  font-size: 32px;
+  margin-block: 36px;
+  font-weight: bold;
+`;
+
+const SigninButtonContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+`;
 
 export default SigninPage;

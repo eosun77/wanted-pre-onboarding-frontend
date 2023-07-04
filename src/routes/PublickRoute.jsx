@@ -1,9 +1,9 @@
 import { Navigate, Outlet } from "react-router-dom";
 
 const PublickRoute = () => {
-  const token = localStorage.getItem("token");
+  const accessToken = localStorage.getItem("accessToken");
 
-  return token ? <Navigate to="/todo" replace /> : <Outlet />;
+  return accessToken ? <Navigate to="/todo" replace /> : <Outlet />;
 };
 
 export default PublickRoute;
